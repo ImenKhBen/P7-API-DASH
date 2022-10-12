@@ -140,9 +140,11 @@ def main():
     prediction = round(float(data_predict["SCORE_0"]),2)  
     
     if prediction <= 0.5 :
-        st.write("Score du client = ", round(prediction*100, 2), "%  --> Client à risque de remboursement : Crédit REFUSE")
+        st.write("Score du client = ", round(prediction*100, 2), "%  --> Client à risque de remboursement")
+        st.error("Crédit REFUSE")
     else :
-        st.write("Score du client = ", round(prediction*100, 2), "%  --> Client sans risque de remboursement : Crédit ACCORDE")
+        st.write("Score du client = ", round(prediction*100, 2), "%  --> Client sans risque de remboursement")
+        st.success("Crédit ACCORDE")
         
     fig = go.Figure(go.Indicator(domain = {'row': 0, 'column': 0}, #{'x': [0, 1], 'y': [0, 1]},
                                  value = round(prediction*100, 2),
