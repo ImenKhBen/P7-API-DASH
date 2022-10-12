@@ -133,14 +133,16 @@ def main():
 
     #if st.button("Afficher le scoring du client"):    
         
-    st.markdown("<u>Donneés sur le scoring du client :</u>", unsafe_allow_html=True)
+    st.markdown("<u> Score : </u>", unsafe_allow_html=True)
+    st.markdown("Si < 50% --> Client à risque de remboursement de crédit, Si > 50% --> Client sans risque de remboursement de crédit.", unsafe_allow_html=True)
+    
     data_predict = dfPrediction[dfPrediction["SK_ID_CURR"] == int(id_client)]
     prediction = round(float(data_predict["SCORE_0"]),2)  
     
     if prediction <= 0.5 :
-        st.write("Score du client = ", round(prediction*100, 2), "%  ==> Client à risque")
+        st.write("Score du client = ", round(prediction*100, 2), "%  --> Client à risque de remboursement : Crédit REFUSE")
     else :
-        st.write("Score du client = ", round(prediction*100, 2), "%  ==> Client non à risque")
+        st.write("Score du client = ", round(prediction*100, 2), "%  --> Client sans risque de remboursement : Crédit ACCORDE")
         
     fig = go.Figure(go.Indicator(domain = {'row': 0, 'column': 0}, #{'x': [0, 1], 'y': [0, 1]},
                                  value = round(prediction*100, 2),
