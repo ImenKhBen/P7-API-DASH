@@ -260,44 +260,5 @@ def load_revenus_population():
 
     return data_revenus
 
-def load_prediction():
-    
-    # Requête permettant de récupérer la prédiction de faillite du client sélectionné
-    prediction = requests.get(URL_API + "predict", params={"id_client":id_client})    
-    prediction = prediction.json() 
-    
-    return prediction
-
-def load_voisins():
-    
-    # Requête permettant de récupérer les 10 dossiers les plus proches de l'ID client choisi
-    voisins = requests.get(URL_API + "load_voisins", params={"id_client":id_client})
-
-    # On transforme la réponse en dictionnaire python
-    voisins = json.loads(voisins.content.decode("utf-8"))
-    
-    # On transforme le dictionnaire en dataframe
-    voisins = pd.DataFrame.from_dict(voisins).T
-
-    # On déplace la colonne TARGET en premier pour plus de lisibilité
-    target = voisins["TARGET"]
-    voisins.drop(labels=["TARGET"], axis=1, inplace=True)
-    voisins.insert(0, "TARGET", target)
-    
-    return voisins
-
-def load_features_importances():
-
-    # Requête permettant de récupérer les informations du client sélectionné
-    features_importances = requests.get(URL_API + "features_importances")
-   
-    # On transforme la réponse en dictionnaire python
-    features_importances = json.loads(features_importances.content.decode("utf-8"))
-    
-    # On transforme le dictionnaire en dataframe
-    features_importances = pd.DataFrame.from_dict(features_importances).T
-
-    return features_importances
-
 if __name__ == "__main__":
     main()
